@@ -1,3 +1,23 @@
 body {
     margin: 0;
 }
+/* board section */
+.board {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    width: 400px;
+    padding: 10px;
+    background-color: #0039a6;
+    border: 4px solid #318CE7;
+    border-radius: 15px;
+    margin: 20px auto
+}
+.slot {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid #318CE7;
+    box-sizing: border-box;
+}
