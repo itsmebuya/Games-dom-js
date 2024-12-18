@@ -14,19 +14,51 @@
 // });
 // board section
 const createConnect4Board = () => {
-const gameBoard = document.getElementById("container")
+    const gameBoard = document.getElementById("container")
+    
+    const board = document.createElement("div");
+    board.classList.add("board");
+    document.body.appendChild(board)
+    
+    for (let i = 0; i < 42; i++) {
+        const slot = document.createElement('div');
+        slot.classList.add("slot");
+        board.appendChild(slot);
+    } 
+     
+    const redDisc = document.createElement("div");
+    redDisc.classList.add("redDisc");
+    
+    const redInput = document.createElement("input");
+    redInput.type = "radio";
+    redInput.name = "discChoice";
+    redInput.id = "redDiscChoice";
+    
+    const yellowDisc = document.createElement("div");
+    yellowDisc.classList.add("yellowDisc");
+    
+    const yellowInput = document.createElement("input");
+    yellowInput.type = "radio";
+    yellowInput.name = "discChoice";
+    yellowInput.id = "yellowDiscChoice";
+    
+    const redContainer = document.createElement("div");
+    redContainer.appendChild(redDisc);
+    redContainer.appendChild(redInput);
+    
+    const yellowContainer = document.createElement("div");
+    yellowContainer.appendChild(yellowDisc);
+    yellowContainer.appendChild(yellowInput);
+    
+    document.body.appendChild(redContainer);
+    document.body.appendChild(yellowContainer);
+    
+    };
+    createConnect4Board();
+    
+    
+  
 
-const board = document.createElement("div");
-board.classList.add("board");
-document.body.appendChild(board)
-
-for (let i = 0; i < 42; i++) {
-    const slot = document.createElement('div');
-    slot.classList.add("slot");
-    board.appendChild(slot);
-}    
-};
-createConnect4Board();
 
 let array = {
     A: [null, null, null, null, null, null],

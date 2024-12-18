@@ -28,7 +28,28 @@ body {
     box-sizing: border-box;
 }
 
+.disc {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: purple;
 
+}
+.redDisc{
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #AA0000;
+    background-color: #D2122E;
+}
+.yellowDisc{
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: #F0E68C;
+    border: 3px solid #FFFF00;
+}
 
 .container {
     margin: auto;
@@ -36,24 +57,39 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: fit-content;
 }
 
+/* .Title {
+    max-width: 1000px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Title_text {
+    font-size: 50px;
+    font-family: Arial;
+    font-weight: 700;
+    background: linear-gradient(0deg, #000066, #ffffff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+} */
 .Title {
-    width: 100%;
     display: flex;
-    justify-content: center;
-    /* width: fit-content; */
+    width: fit-content;
     background: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
     background-size: 200% 200%;
     animation: anime 1s infinite alternate;
 }
 
 .Title_text {
-    font-size: 80px;
+    font-size: 5rem;
     font-family: Arial;
     font-weight: 600;
     color: #fff;
+
 }
 
 @keyframes anime {
