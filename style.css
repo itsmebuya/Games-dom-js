@@ -10,22 +10,25 @@ body {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 5px;
-    width: 400px;
+    width: 850px; 
     padding: 10px;
     background-color: #0039a6;
-    border: 4px solid #318CE7;
+    border: 2px solid #318CE7; 
     border-radius: 15px;
-    margin: 20px auto
+    margin: 20px auto;
+    box-sizing: border-box; 
 }
 
 .slot {
-    width: 50px;
-    height: 50px;
+    width: calc((800px - 5px * 6) / 7); 
+    height: calc((800px - 5px * 6) / 7); 
     background-color: white;
     border-radius: 50%;
     border: 2px solid #318CE7;
     box-sizing: border-box;
 }
+
+
 
 .container {
     margin: auto;
