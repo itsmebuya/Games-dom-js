@@ -1,6 +1,10 @@
+@charset "UTF-8";
+
 body {
     margin: 0;
+    background-color: #eee;
 }
+
 /* board section */
 .board {
     display: grid;
@@ -13,6 +17,7 @@ body {
     border-radius: 15px;
     margin: 20px auto
 }
+
 .slot {
     width: 50px;
     height: 50px;
@@ -20,4 +25,55 @@ body {
     border-radius: 50%;
     border: 2px solid #318CE7;
     box-sizing: border-box;
+}
+
+.container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+/* .Title {
+    max-width: 1000px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Title_text {
+    font-size: 50px;
+    font-family: Arial;
+    font-weight: 700;
+    background: linear-gradient(0deg, #000066, #ffffff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+} */
+.Title {
+    display: flex;
+    width: fit-content;
+    background: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+    background-size: 200% 200%;
+    animation: anime 1s infinite alternate;
+}
+
+.Title_text {
+    font-size: 5rem;
+    font-family: Arial;
+    font-weight: 600;
+    color: #fff;
+
+}
+
+@keyframes anime {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 0%;
+    }
 }
