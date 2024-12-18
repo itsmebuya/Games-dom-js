@@ -1,3 +1,17 @@
+// document.getElementById('game1-btn').addEventListener('click', function() {
+//     // Go to 4 in a row game
+//     window.location.href = '4inarow.html'; // Change this path to your 4 in a row game page
+// });
+
+// document.getElementById('game2-btn').addEventListener('click', function() {
+//     // Go to Tic Tac Toe game
+//     window.location.href = 'tictactoe.html'; // Change this path to your Tic Tac Toe game page
+// });
+
+// document.getElementById('game3-btn').addEventListener('click', function() {
+//     // Go to Line game
+//     window.location.href = 'line.html'; // Change this path to your Line game page
+// });
 // board section
 const createConnect4Board = () => {
 const gameBoard = document.getElementById("container")
@@ -13,20 +27,6 @@ for (let i = 0; i < 42; i++) {
 }    
 };
 createConnect4Board();
-// document.getElementById('game1-btn').addEventListener('click', function() {
-//     // Go to 4 in a row game
-//     window.location.href = '4inarow.html'; // Change this path to your 4 in a row game page
-// });
-
-// document.getElementById('game2-btn').addEventListener('click', function() {
-//     // Go to Tic Tac Toe game
-//     window.location.href = 'tictactoe.html'; // Change this path to your Tic Tac Toe game page
-// });
-
-// document.getElementById('game3-btn').addEventListener('click', function() {
-//     // Go to Line game
-//     window.location.href = 'line.html'; // Change this path to your Line game page
-// });
 
 let array = {
     A: [null, null, null, null, null, null],

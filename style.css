@@ -36,39 +36,24 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 100%;
 }
 
-/* .Title {
-    max-width: 1000px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.Title_text {
-    font-size: 50px;
-    font-family: Arial;
-    font-weight: 700;
-    background: linear-gradient(0deg, #000066, #ffffff);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent
-} */
 .Title {
+    width: 100%;
     display: flex;
-    width: fit-content;
+    justify-content: center;
+    /* width: fit-content; */
     background: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
     background-size: 200% 200%;
     animation: anime 1s infinite alternate;
 }
 
 .Title_text {
-    font-size: 5rem;
+    font-size: 80px;
     font-family: Arial;
     font-weight: 600;
     color: #fff;
-
 }
 
 @keyframes anime {
