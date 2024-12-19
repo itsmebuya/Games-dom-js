@@ -20,11 +20,11 @@ const createConnect4Board = () => {
   gameBoard.appendChild(board);
 
   for (let i = 0; i < 42; i++) {
-      const slot = document.createElement("div");
-      slot.classList.add("slot");
-      slot.dataset.column = i % 7; // 7 columns
-      slot.dataset.row = Math.floor(i / 7); // 6 rows
-      board.appendChild(slot);
+    const slot = document.createElement("div");
+    slot.classList.add("slot");
+    slot.dataset.column = i % 7; // 7 columns
+    slot.dataset.row = Math.floor(i / 7); // 6 rows
+    board.appendChild(slot);
   }
 
   // Controls
@@ -34,7 +34,7 @@ const createConnect4Board = () => {
   // Red disc section
   const redDisc = document.createElement("div");
   redDisc.classList.add("redDisc");
-  
+
   const redInput = document.createElement("input");
   redInput.type = "radio";
   redInput.name = "discChoice";
@@ -44,7 +44,7 @@ const createConnect4Board = () => {
   // Yellow disc section
   const yellowDisc = document.createElement("div");
   yellowDisc.classList.add("yellowDisc");
-  
+
   const yellowInput = document.createElement("input");
   yellowInput.type = "radio";
   yellowInput.name = "discChoice";
@@ -53,7 +53,7 @@ const createConnect4Board = () => {
   const redContainer = document.createElement("div");
   redContainer.appendChild(redDisc);
   redContainer.appendChild(redInput);
-  
+
   const yellowContainer = document.createElement("div");
   yellowContainer.appendChild(yellowDisc);
   yellowContainer.appendChild(yellowInput);
@@ -82,10 +82,10 @@ let currentPlayer = "red";
 // Check for a win condition
 const checkWin = (array, currentPlayer) => {
   const directions = [
-      [0, 1], // horizontal
-      [1, 0], // vertical
-      [1, 1], // diagonal down-right
-      [1, -1], // diagonal up-right
+    [0, 1], // horizontal
+    [1, 0], // vertical
+    [1, 1], // diagonal down-right
+    [1, -1], // diagonal up-right
   ];
 
   for (let row = 0; row < 6; row++) {
@@ -129,17 +129,15 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
       const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
       const rect = targetSlot.getBoundingClientRect();
-      const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
-      const firstSlotRect = firstSlotInColumn.getBoundingClientRect();
 
       // Set the initial position above the board to simulate falling
-      disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center the disc horizontally
-      disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
+      disc.style.left = `${rect.left + window.scrollX}px`;
+      disc.style.top = `${rect.top + window.scrollY - 100}px`; // Start above the board
       disc.style.position = "absolute"; // Absolute position for falling effect
 
       // Simulate falling by transitioning the disc down to the slot
       setTimeout(() => {
-        disc.style.transition = "top 3s ease-in"; // Extended time for the fall
+        disc.style.transition = "top 0.5s ease-in";
         disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
 
         // After falling, append the disc to the slot
@@ -156,10 +154,11 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
           // Toggle player turn
           currentPlayer = currentPlayer === "red" ? "yellow" : "red";
-        }, 3000); // This timeout matches the new fall duration
+        }, 500);
       }, 0);
     }
-    console.log(array);
+    console.log(array)
+
   });
 });
 
@@ -170,15 +169,12 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
 
 
-
-
-
-//const container = document.getElementById("container")
-//const title = document.createElement('div');
-//title.classList.add("Title")
-//const title_text = document.createElement('p');
-//title_text.innerHTML = "4 In A Row"
-//title_text.classList.add("Title_text")
-//title.appendChild(title_text);
-//document.getElementById("container").appendChild(title);
+const container = document.getElementById("container")
+const title = document.createElement('div');
+title.classList.add("Title")
+const title_text = document.createElement('p');
+title_text.innerHTML = "4 In A Row"
+title_text.classList.add("Title_text")
+title.appendChild(title_text);
+document.getElementById("container").appendChild(title);
 
