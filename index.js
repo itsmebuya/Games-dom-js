@@ -20,11 +20,12 @@ const createConnect4Board = () => {
   gameBoard.appendChild(board);
 
   for (let i = 0; i < 42; i++) {
-      const slot = document.createElement("div");
-      slot.classList.add("slot");
-      slot.dataset.column = i % 7; // 7 columns
-      slot.dataset.row = Math.floor(i / 7); // 6 rows
-      board.appendChild(slot);
+    const slot = document.createElement("div");
+    slot.classList.add("slot");
+    slot.id = i % 7 + "-" + Math.floor(i / 7);
+    slot.dataset.column = i % 7; // 7 columns
+    slot.dataset.row = Math.floor(i / 7); // 6 rows
+    board.appendChild(slot);
   }
 
   // Controls
@@ -34,7 +35,7 @@ const createConnect4Board = () => {
   // Red disc section
   const redDisc = document.createElement("div");
   redDisc.classList.add("redDisc");
-  
+
   const redInput = document.createElement("input");
   redInput.type = "radio";
   redInput.name = "discChoice";
@@ -44,7 +45,7 @@ const createConnect4Board = () => {
   // Yellow disc section
   const yellowDisc = document.createElement("div");
   yellowDisc.classList.add("yellowDisc");
-  
+
   const yellowInput = document.createElement("input");
   yellowInput.type = "radio";
   yellowInput.name = "discChoice";
@@ -53,7 +54,7 @@ const createConnect4Board = () => {
   const redContainer = document.createElement("div");
   redContainer.appendChild(redDisc);
   redContainer.appendChild(redInput);
-  
+
   const yellowContainer = document.createElement("div");
   yellowContainer.appendChild(yellowDisc);
   yellowContainer.appendChild(yellowInput);
@@ -79,13 +80,29 @@ const columnMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 let currentPlayer = "red";
 
+function paintSlot(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      if (array[i][j] == 'red') {
+        console.log(i, j, 'red')
+        document.getElementById(j+"-"+i).classList.add("red")
+        // console.log(i+"-"+j)
+      }
+      else if (array[i][j] == 'yellow') {
+        document.getElementById(j+"-"+i).classList.add("yellow")
+        console.log(i, j, 'yellow')
+      }
+    }
+  }
+}
+
 // Check for a win condition
 const checkWin = (array, currentPlayer) => {
   const directions = [
-      [0, 1], // horizontal
-      [1, 0], // vertical
-      [1, 1], // diagonal down-right
-      [1, -1], // diagonal up-right
+    [0, 1], // horizontal
+    [1, 0], // vertical
+    [1, 1], // diagonal down-right
+    [1, -1], // diagonal up-right
   ];
 
   for (let row = 0; row < 6; row++) {
@@ -153,6 +170,7 @@ document.querySelectorAll(".slot").forEach((slot) => {
             // alert(`${currentPlayer} wins!`);
             // location.reload(); // Restart the game
           }
+          paintSlot(array);
 
           // Toggle player turn
           currentPlayer = currentPlayer === "red" ? "yellow" : "red";
