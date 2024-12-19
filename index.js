@@ -67,15 +67,22 @@ controls.classList.add("controls");
   createConnect4Board();
   
 // game logic
-const array = {
-    A: [null, null, null, null, null, null],
-    B: [null, null, null, null, null, null],
-    C: [null, null, null, null, null, null],
-    D: [null, null, null, null, null, null],
-    E: [null, null, null, null, null, null],
-    F: [null, null, null, null, null, null],
-    G: [null, null, null, null, null, null]
-};
+
+ 
+
+
+    
+  
+
+// PS this will be used
+let array = [
+  [null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null],
+];
 
 const columnMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 

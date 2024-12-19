@@ -72,22 +72,6 @@ body {
     width: fit-content;
 }
 
-/* .Title {
-    max-width: 1000px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.Title_text {
-    font-size: 50px;
-    font-family: Arial;
-    font-weight: 700;
-    background: linear-gradient(0deg, #000066, #ffffff);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent
-} */
 .Title {
     display: flex;
     width: fit-content;
