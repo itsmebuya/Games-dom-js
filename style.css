@@ -36,19 +36,30 @@ body {
     background-color: purple;
 
 }
-.redDisc{
+.redDisc, .yellowDisc{
     width: 110px;
     height: 110px;
     border-radius: 50%;
+}
+.redDisc{
     border: 3px solid #AA0000;
     background-color: #D2122E;
 }
 .yellowDisc{
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
     background-color: #F0E68C;
     border: 3px solid #FFFF00;
+}
+/* the controls */
+.controls{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.controls div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .container {
