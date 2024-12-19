@@ -129,15 +129,17 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
       const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
       const rect = targetSlot.getBoundingClientRect();
+      const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
+      const firstSlotRect = firstSlotInColumn.getBoundingClientRect();
 
       // Set the initial position above the board to simulate falling
-      disc.style.left = `${rect.left + window.scrollX}px`;
-      disc.style.top = `${rect.top + window.scrollY - 100}px`; // Start above the board
+      disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center the disc horizontally
+      disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
       disc.style.position = "absolute"; // Absolute position for falling effect
 
       // Simulate falling by transitioning the disc down to the slot
       setTimeout(() => {
-        disc.style.transition = "top 0.5s ease-in";
+        disc.style.transition = "top 3s ease-in"; // Extended time for the fall
         disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
 
         // After falling, append the disc to the slot
@@ -154,13 +156,15 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
           // Toggle player turn
           currentPlayer = currentPlayer === "red" ? "yellow" : "red";
-        }, 500);
+        }, 3000); // This timeout matches the new fall duration
       }, 0);
     }
-    console.log(array)
-    
+    console.log(array);
   });
 });
+
+
+
 
 
 
