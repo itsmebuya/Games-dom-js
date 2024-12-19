@@ -22,14 +22,16 @@ const createConnect4Board = () => {
   for (let i = 0; i < 42; i++) {
       const slot = document.createElement("div");
       slot.classList.add("slot");
-      slot.dataset.column = i % 7;
-      slot.dataset.row = Math.floor(i / 7);
+      slot.dataset.column = i % 7; // 7 columns
+      slot.dataset.row = Math.floor(i / 7); // 6 rows
       board.appendChild(slot);
-  } 
-// controls
-const controls = document.createElement("div");
-controls.classList.add("controls");  
-// red disc section   
+  }
+
+  // Controls
+  const controls = document.createElement("div");
+  controls.classList.add("controls");
+
+  // Red disc section
   const redDisc = document.createElement("div");
   redDisc.classList.add("redDisc");
   
@@ -38,7 +40,8 @@ controls.classList.add("controls");
   redInput.name = "discChoice";
   redInput.id = "redDiscChoice";
   redInput.checked = true;
-// yellow disc section  
+
+  // Yellow disc section
   const yellowDisc = document.createElement("div");
   yellowDisc.classList.add("yellowDisc");
   
@@ -46,7 +49,7 @@ controls.classList.add("controls");
   yellowInput.type = "radio";
   yellowInput.name = "discChoice";
   yellowInput.id = "yellowDiscChoice";
-  
+
   const redContainer = document.createElement("div");
   redContainer.appendChild(redDisc);
   redContainer.appendChild(redInput);
@@ -55,25 +58,14 @@ controls.classList.add("controls");
   yellowContainer.appendChild(yellowDisc);
   yellowContainer.appendChild(yellowInput);
 
-  
-  
   controls.appendChild(redContainer);
   controls.appendChild(yellowContainer);
   gameBoard.appendChild(controls);
+};
 
-  
-  };
-  createConnect4Board();
-  
-// game logic
+createConnect4Board();
 
- 
-
-
-    
-  
-
-// PS this will be used
+// Game state (2D array for the board)
 let array = [
   [null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null],
@@ -85,6 +77,8 @@ let array = [
 
 const columnMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
+let currentPlayer = "red";
+
 // Check for a win condition
 const checkWin = (array, currentPlayer) => {
   const directions = [
@@ -94,85 +88,80 @@ const checkWin = (array, currentPlayer) => {
       [1, -1], // diagonal up-right
   ];
 
-  for (let column in array) {
-      for (let row = 0; row < array[column].length; row++) {
-          if (array[column][row] === currentPlayer) {
-              for (let [dx, dy] of directions) {
-                  let count = 1;
-                  for (let step = 1; step < 4; step++) {
-                      const nextColumn = columnMap[columnMap.indexOf(column) + dx * step];
-                      const nextRow = row + dy * step;
-                      if (
-                          nextColumn &&
-                          nextRow >= 0 &&
-                          nextRow < 6 &&
-                          array[nextColumn]?.[nextRow] === currentPlayer
-                      ) {
-                          count++;
-                      } else {
-                          break;
-                      }
-                  }
-                  if (count === 4) return true;
-              }
+  for (let row = 0; row < 6; row++) {
+    for (let col = 0; col < 7; col++) {
+      if (array[row][col] === currentPlayer) {
+        for (let [dx, dy] of directions) {
+          let count = 1;
+          for (let step = 1; step < 4; step++) {
+            const nextRow = row + dy * step;
+            const nextCol = col + dx * step;
+            if (nextRow >= 0 && nextRow < 6 && nextCol >= 0 && nextCol < 7 && array[nextRow][nextCol] === currentPlayer) {
+              count++;
+            } else {
+              break;
+            }
           }
+          if (count === 4) return true;
+        }
       }
+    }
   }
   return false;
 };
 
-let currentPlayer = "red";
-
 // Handle slot clicks and manage the falling effect
 document.querySelectorAll(".slot").forEach((slot) => {
   slot.addEventListener("click", () => {
-      const columnIndex = parseInt(slot.dataset.column);
-      const columnKey = columnMap[columnIndex];
-      const column = array[columnKey];
+    const columnIndex = parseInt(slot.dataset.column);
+    const column = array.map(row => row[columnIndex]);
 
-      // Find the lowest empty slot in the column (simulating falling discs)
-      const rowIndex = column.lastIndexOf(null);
-      if (rowIndex !== -1) {
-          // Update the game state
-          column[rowIndex] = currentPlayer;
+    // Find the lowest empty slot in the column (simulating falling discs)
+    const rowIndex = column.lastIndexOf(null);
+    if (rowIndex !== -1) {
+      // Update the game state
+      array[rowIndex][columnIndex] = currentPlayer;
 
-          // Create the disc element and position it to fall
-          const disc = document.createElement("div");
-          disc.classList.add("disc", `${currentPlayer}Disc`);
-          document.body.appendChild(disc);
+      // Create the disc element and position it to fall
+      const disc = document.createElement("div");
+      disc.classList.add("disc", `${currentPlayer}Disc`);
+      document.body.appendChild(disc);
 
-          const slots = document.querySelectorAll(`.slot[data-column="${columnIndex}"]`);
-          const targetSlot = slots[5 - rowIndex];
-          const rect = targetSlot.getBoundingClientRect();
+      const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
+      const rect = targetSlot.getBoundingClientRect();
 
-          // Set the initial position above the board to simulate falling
-          disc.style.left = `${rect.left + window.scrollX}px`;
-          disc.style.top = `${rect.top + window.scrollY - 100}px`; // Start above the board
-          disc.style.position = "absolute"; // Absolute position for falling effect
+      // Set the initial position above the board to simulate falling
+      disc.style.left = `${rect.left + window.scrollX}px`;
+      disc.style.top = `${rect.top + window.scrollY - 100}px`; // Start above the board
+      disc.style.position = "absolute"; // Absolute position for falling effect
 
-          // Simulate falling by transitioning the disc down to the slot
-          setTimeout(() => {
-              disc.style.transition = "top 0.5s ease-in";
-              disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
+      // Simulate falling by transitioning the disc down to the slot
+      setTimeout(() => {
+        disc.style.transition = "top 0.5s ease-in";
+        disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
 
-              // After falling, append the disc to the slot
-              setTimeout(() => {
-                  targetSlot.appendChild(disc);
-                  disc.style.position = "relative"; // Reset position for grid placement
+        // After falling, append the disc to the slot
+        setTimeout(() => {
+          targetSlot.appendChild(disc);
+          disc.style.position = "relative"; // Reset position for grid placement
 
-                  // Check for win after the disc lands
-                  if (checkWin(array, currentPlayer)) {
-                      alert(`${currentPlayer} wins!`);
-                      location.reload(); // Restart the game
-                  }
+          // Check for win after the disc lands
+          if (checkWin(array, currentPlayer)) {
+            console.log(`${currentPlayer} wins`);
+            // alert(`${currentPlayer} wins!`);
+            // location.reload(); // Restart the game
+          }
 
-                  // Toggle player turn
-                  currentPlayer = currentPlayer === "red" ? "yellow" : "red";
-              }, 500);
-          }, 0);
-      }
+          // Toggle player turn
+          currentPlayer = currentPlayer === "red" ? "yellow" : "red";
+        }, 500);
+      }, 0);
+    }
+    console.log(array)
+    
   });
 });
+
 
 
 
