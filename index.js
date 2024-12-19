@@ -12,6 +12,7 @@
 //     // Go to Line game
 //     window.location.href = 'line.html'; // Change this path to your Line game page
 // });
+// Create Connect 4 Board
 const createConnect4Board = () => {
   const gameBoard = document.getElementById("container");
 
@@ -62,8 +63,13 @@ const createConnect4Board = () => {
   controls.appendChild(redContainer);
   controls.appendChild(yellowContainer);
   gameBoard.appendChild(controls);
+
+  // Add h3 tag at the bottom of the board
+  const status = document.createElement('h3');
+  gameBoard.appendChild(status);
 };
 
+// Initialize the game board
 createConnect4Board();
 
 // Game state (2D array for the board)
@@ -76,9 +82,13 @@ let array = [
   [null, null, null, null, null, null, null],
 ];
 
-const columnMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-
-let currentPlayer = "red";
+let currentPlayer = 1; // 1 for Player One (red), 2 for Player Two (yellow)
+let currentPlayerName = 'Player One';
+let playerOne = 'Player One';
+let playerTwo = 'Player Two';
+let playerOneColor = 'red';
+let playerTwoColor = 'yellow';
+let currentColor = playerOneColor;
 
 function paintSlot(array) {
   for (let i = 0; i < array.length; i++) {
@@ -127,6 +137,20 @@ const checkWin = (array, currentPlayer) => {
   return false;
 };
 
+// Update the h3 tag and player turn
+const updatePlayerTurn = () => {
+  const status = document.querySelector('h3');
+  if (currentPlayer === 1) {
+    currentPlayerName = playerOne;
+    status.textContent = `${currentPlayerName}: It's your turn, click a column to add your chip`;
+    currentColor = playerOneColor;
+  } else {
+    currentPlayerName = playerTwo;
+    status.textContent = `${currentPlayerName}: It's your turn, click a column to add your chip.`;
+    currentColor = playerTwoColor;
+  }
+};
+
 // Handle slot clicks and manage the falling effect
 document.querySelectorAll(".slot").forEach((slot) => {
   slot.addEventListener("click", () => {
@@ -141,7 +165,7 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
       // Create the disc element and position it to fall
       const disc = document.createElement("div");
-      disc.classList.add("disc", `${currentPlayer}Disc`);
+      disc.classList.add("disc", `${currentColor}Disc`);
       document.body.appendChild(disc);
 
       const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
@@ -166,20 +190,25 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
           // Check for win after the disc lands
           if (checkWin(array, currentPlayer)) {
-            console.log(`${currentPlayer} wins`);
-            // alert(`${currentPlayer} wins!`);
+            console.log(`${currentPlayerName} wins`);
+            // alert(`${currentPlayerName} wins!`);
             // location.reload(); // Restart the game
           }
           paintSlot(array);
 
           // Toggle player turn
-          currentPlayer = currentPlayer === "red" ? "yellow" : "red";
+          currentPlayer = currentPlayer === 1 ? 2 : 1;
+          updatePlayerTurn(); // Update the turn message
         }, 3000); // This timeout matches the new fall duration
       }, 0);
     }
     console.log(array);
   });
 });
+
+// Initialize the first player turn
+updatePlayerTurn();
+
 
 
 
