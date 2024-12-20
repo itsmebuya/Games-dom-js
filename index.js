@@ -41,50 +41,50 @@ const createConnect4Board = () => {
   }
 
   // Create a container for the controls (player disc choices)
-// Create the controls container
-// Create the controls container
-const controls = document.createElement("div");
-controls.classList.add("controls"); // Add a class for styling
+  // Create the controls container
+  // Create the controls container
+  const controls = document.createElement("div");
+  controls.classList.add("controls"); // Add a class for styling
 
-// Create and configure the red disc selection
-// Create the red disc element and input
-const redDisc = document.createElement("div");
-redDisc.classList.add("redDisc"); // Add a class for styling
-redDisc.style.display = "none"; // Hide the red disc element
+  // Create and configure the red disc selection
+  // Create the red disc element and input
+  const redDisc = document.createElement("div");
+  redDisc.classList.add("redDisc"); // Add a class for styling
+  redDisc.style.display = "none"; // Hide the red disc element
 
-const redInput = document.createElement("input"); // Create a radio input
-redInput.type = "radio"; // Set type to radio
-redInput.name = "discChoice"; // Set name for grouping radio buttons
-redInput.id = "redDiscChoice"; // Assign an ID
-redInput.checked = true; // Make red the default selected disc
-redInput.style.display = "none"; // Hide the input element
+  const redInput = document.createElement("input"); // Create a radio input
+  redInput.type = "radio"; // Set type to radio
+  redInput.name = "discChoice"; // Set name for grouping radio buttons
+  redInput.id = "redDiscChoice"; // Assign an ID
+  redInput.checked = true; // Make red the default selected disc
+  redInput.style.display = "none"; // Hide the input element
 
-// Create the yellow disc element and input
-const yellowDisc = document.createElement("div");
-yellowDisc.classList.add("yellowDisc"); // Add a class for styling
-yellowDisc.style.display = "none"; // Hide the yellow disc element
+  // Create the yellow disc element and input
+  const yellowDisc = document.createElement("div");
+  yellowDisc.classList.add("yellowDisc"); // Add a class for styling
+  yellowDisc.style.display = "none"; // Hide the yellow disc element
 
-const yellowInput = document.createElement("input"); // Create a radio input
-yellowInput.type = "radio"; // Set type to radio
-yellowInput.name = "discChoice"; // Group with red disc radio
-yellowInput.id = "yellowDiscChoice"; // Assign an ID
-yellowInput.style.display = "none"; // Hide the input element
+  const yellowInput = document.createElement("input"); // Create a radio input
+  yellowInput.type = "radio"; // Set type to radio
+  yellowInput.name = "discChoice"; // Group with red disc radio
+  yellowInput.id = "yellowDiscChoice"; // Assign an ID
+  yellowInput.style.display = "none"; // Hide the input element
 
-// Create containers for each disc choice and append elements
-const redContainer = document.createElement("div");
-redContainer.appendChild(redDisc);
-redContainer.appendChild(redInput);
+  // Create containers for each disc choice and append elements
+  const redContainer = document.createElement("div");
+  redContainer.appendChild(redDisc);
+  redContainer.appendChild(redInput);
 
-const yellowContainer = document.createElement("div");
-yellowContainer.appendChild(yellowDisc);
-yellowContainer.appendChild(yellowInput);
+  const yellowContainer = document.createElement("div");
+  yellowContainer.appendChild(yellowDisc);
+  yellowContainer.appendChild(yellowInput);
 
-// Append the red and yellow containers to the controls div
-controls.appendChild(redContainer);
-controls.appendChild(yellowContainer);
+  // Append the red and yellow containers to the controls div
+  controls.appendChild(redContainer);
+  controls.appendChild(yellowContainer);
 
-// Optionally, append the controls div to the body or another parent container
-document.body.appendChild(controls);
+  // Optionally, append the controls div to the body or another parent container
+  document.body.appendChild(controls);
 
 
   // Append the disc choices to the controls section
@@ -121,7 +121,7 @@ let playerTwoColor = 'yellow';
 let currentColor = playerOneColor;
 let isLock = false;
 
-function togglePlayer(){
+function togglePlayer() {
   currentPlayer = 3 - currentPlayer;
 }
 
@@ -196,68 +196,71 @@ const waitForAnimation = (duration) => {
 };
 
 const onClick = async (event) => {
-   if (isLock) return
-   const slot= event.target
+  if (isLock) return
+  const slot = event.target
   const columnIndex = parseInt(slot.dataset.column);
   const column = array.map(row => row[columnIndex]);
 
-    // Find the lowest empty slot in the column (simulating falling discs)
-    const rowIndex = column.lastIndexOf(null); // Find the first available row
-    if (rowIndex !== -1) {
-      // Update the game state by placing the current player's disc
-      array[rowIndex][columnIndex] = currentPlayer;
+  // Find the lowest empty slot in the column (simulating falling discs)
+  const rowIndex = column.lastIndexOf(null); // Find the first available row
+  if (rowIndex !== -1) {
+    // Update the game state by placing the current player's disc
+    array[rowIndex][columnIndex] = currentPlayer;
 
-      // Create a disc element for the falling effect
-      const disc = document.createElement("div");
-      disc.classList.add("disc", `${currentColor}Disc`); // Style the disc with color
-      document.body.appendChild(disc);
+    // Create a disc element for the falling effect
+    const disc = document.createElement("div");
+    disc.classList.add("disc", `${currentColor}Disc`); // Style the disc with color
+    document.body.appendChild(disc);
 
-      const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
-      const rect = targetSlot.getBoundingClientRect(); // Get the slot's position on the screen
-      const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
-      const firstSlotRect = firstSlotInColumn.getBoundingClientRect(); // Get position of the first slot
+    const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
+    const rect = targetSlot.getBoundingClientRect(); // Get the slot's position on the screen
+    const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
+    const firstSlotRect = firstSlotInColumn.getBoundingClientRect(); // Get position of the first slot
 
-      // Set initial position for the disc above the board
-      disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center horizontally
-      disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
-      disc.style.position = "absolute"; // Use absolute positioning for animation
+    // Set initial position for the disc above the board
+    disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center horizontally
+    disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
+    disc.style.position = "absolute"; // Use absolute positioning for animation
 
-      // Trigger the falling animation
-      setTimeout(() => {
-        disc.style.transition = "top 1.5s ease-in"; // Smooth falling animation
-        disc.style.top = `${rect.top + window.scrollY}px`; // Move to the slot position
-      }, 0);
+    // Trigger the falling animation
+    setTimeout(() => {
+      disc.style.transition = "top 1.5s ease-in"; // Smooth falling animation
+      disc.style.top = `${rect.top + window.scrollY}px`; // Move to the slot position
+    }, 0);
 
     isLock = true
 
-      // Wait for the falling animation to complete
-      await waitForAnimation(1500);
+    // Wait for the falling animation to complete
+    await waitForAnimation(1500);
 
     // After falling, remove the disc
     disc.remove(); // Remove the disc element after the animation
     isLock = false
 
-      // Apply the color class to the slot for visual representation
-      targetSlot.classList.add(currentColor);
+    // Apply the color class to the slot for visual representation
+    targetSlot.classList.add(currentColor);
 
-      // Check for a win condition after the disc lands
-      if (checkWin(array, currentPlayer)) {
+    // Check for a win condition after the disc lands
+    if (checkWin(array, currentPlayer)) {
       const status = document.querySelector('h3'); // Get the status element
-        const resultMessage = document.createElement('h2'); // Create a new element for the win message
-        resultMessage.textContent = `${currentPlayerName} wins!`; // Set the win message
-        resultMessage.classList.add("win-message"); // Style the win message
-        status.parentNode.appendChild(resultMessage); // Display the win message
-        return; // Stop further play
-      }
-
-      // Toggle player turn
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      updatePlayerTurn(); // Update the turn message
+      const resultMessage = document.createElement('h2'); // Create a new element for the win message
+      resultMessage.textContent = `${currentPlayerName} wins!`; // Set the win message
+      resultMessage.classList.add("win-message"); // Style the win message
+      status.parentNode.appendChild(resultMessage); // Display the win message
+      return; // Stop further play
     }
-    console.log(array);
-  };
 
+    // Toggle player turn
+    togglePlayer();
+    // currentPlayer = currentPlayer === 1 ? 2 : 1;
+    updatePlayerTurn(); // Update the turn message
+  }
+  console.log(array);
+};
 
+document.querySelectorAll(".slot").forEach((slot) => {
+  slot.addEventListener("click", onClick)
+});
 
 
 
