@@ -69,6 +69,7 @@ const createConnect4Board = () => {
   gameBoard.appendChild(status);
 };
 
+
 // Initialize the game board
 createConnect4Board();
 
@@ -82,6 +83,7 @@ let array = [
   [null, null, null, null, null, null, null],
 ];
 
+
 let currentPlayer = 1; // 1 for Player One (red), 2 for Player Two (yellow)
 let currentPlayerName = 'Player One';
 let playerOne = 'Player One';
@@ -89,6 +91,11 @@ let playerTwo = 'Player Two';
 let playerOneColor = 'red';
 let playerTwoColor = 'yellow';
 let currentColor = playerOneColor;
+let isLock = false;
+
+function togglePlayer(){
+  currentPlayer = 3 - currentPlayer;
+}
 
 function paintSlot(array) {
   for (let i = 0; i < array.length; i++) {
@@ -156,65 +163,74 @@ const waitForAnimation = (duration) => {
   return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
+const onClick = async (event) => {
+   if (isLock) return
+   const slot= event.target
+  const columnIndex = parseInt(slot.dataset.column);
+  const column = array.map(row => row[columnIndex]);
+
+  // Find the lowest empty slot in the column (simulating falling discs)
+  const rowIndex = column.lastIndexOf(null);
+  if (rowIndex !== -1) {
+    // Update the game state
+    array[rowIndex][columnIndex] = currentPlayer;
+
+    // Create the disc element and position it to fall
+    const disc = document.createElement("div");
+    disc.classList.add("disc", `${currentColor}Disc`);
+    document.body.appendChild(disc);
+
+    const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
+    const rect = targetSlot.getBoundingClientRect();
+    const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
+    const firstSlotRect = firstSlotInColumn.getBoundingClientRect();
+
+    // Set the initial position above the board to simulate falling
+    disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center the disc horizontally
+    disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
+    disc.style.position = "absolute"; // Absolute position for falling effect
+
+    // Simulate falling by transitioning the disc down to the slot
+    setTimeout(() => {
+      disc.style.transition = "top 1.5s ease-in"; // Updated animation duration
+      disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
+    }, 0);
+
+    isLock = true
+
+    // Wait for the animation to complete
+    await waitForAnimation(1500); // Wait for 1.5 seconds
+
+    // After falling, remove the disc
+    disc.remove(); // Remove the disc element after the animation
+    isLock = false
+
+    // Update the visual representation of the slot
+    targetSlot.classList.add(currentColor);
+
+    // Check for win after the disc lands
+    if (checkWin(array, currentPlayer)) {
+      // Update the status message
+      const status = document.querySelector('h3');
+      const resultMessage = document.createElement('h2');
+      resultMessage.textContent = `${currentPlayerName} wins!`;
+      resultMessage.classList.add("win-message"); // Apply CSS class for styling
+      status.parentNode.appendChild(resultMessage); // Append under the h3 element
+      return; // End the function to prevent further play
+    }
+
+    // Toggle player turn
+
+    togglePlayer();
+    // currentPlayer = currentPlayer === 1 ? 2 : 1;
+    updatePlayerTurn(); // Update the turn message
+  }
+  console.log(array);
+}
+
 // Handle slot clicks and manage the falling effect
 document.querySelectorAll(".slot").forEach((slot) => {
-  slot.addEventListener("click", async () => {
-    const columnIndex = parseInt(slot.dataset.column);
-    const column = array.map(row => row[columnIndex]);
-
-    // Find the lowest empty slot in the column (simulating falling discs)
-    const rowIndex = column.lastIndexOf(null);
-    if (rowIndex !== -1) {
-      // Update the game state
-      array[rowIndex][columnIndex] = currentPlayer;
-
-      // Create the disc element and position it to fall
-      const disc = document.createElement("div");
-      disc.classList.add("disc", `${currentColor}Disc`);
-      document.body.appendChild(disc);
-
-      const targetSlot = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="${rowIndex}"]`);
-      const rect = targetSlot.getBoundingClientRect();
-      const firstSlotInColumn = document.querySelector(`.slot[data-column="${columnIndex}"][data-row="0"]`); // First slot in the column
-      const firstSlotRect = firstSlotInColumn.getBoundingClientRect();
-
-      // Set the initial position above the board to simulate falling
-      disc.style.left = `${firstSlotRect.left + window.scrollX + firstSlotRect.width / 2 - disc.offsetWidth / 2}px`; // Center the disc horizontally
-      disc.style.top = `${firstSlotRect.top + window.scrollY - 100}px`; // Start above the board
-      disc.style.position = "absolute"; // Absolute position for falling effect
-
-      // Simulate falling by transitioning the disc down to the slot
-      setTimeout(() => {
-        disc.style.transition = "top 1.5s ease-in"; // Updated animation duration
-        disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
-      }, 0);
-
-      // Wait for the animation to complete
-      await waitForAnimation(1500); // Wait for 1.5 seconds
-
-      // After falling, remove the disc
-      disc.remove(); // Remove the disc element after the animation
-
-      // Update the visual representation of the slot
-      targetSlot.classList.add(currentColor);
-
-      // Check for win after the disc lands
-      if (checkWin(array, currentPlayer)) {
-        // Update the status message
-        const status = document.querySelector('h3');
-        const resultMessage = document.createElement('h2');
-        resultMessage.textContent = `${currentPlayerName} wins!`;
-        resultMessage.classList.add("win-message"); // Apply CSS class for styling
-        status.parentNode.appendChild(resultMessage); // Append under the h3 element
-        return; // End the function to prevent further play
-      }
-
-      // Toggle player turn
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      updatePlayerTurn(); // Update the turn message
-    }
-    console.log(array);
-  });
+  slot.addEventListener("click", onClick)
 });
 
 
