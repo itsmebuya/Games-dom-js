@@ -151,14 +151,18 @@ const updatePlayerTurn = () => {
     currentColor = playerTwoColor;
   }
 };
+// Function to wait for the falling animation to complete
+const waitForAnimation = (duration) => {
+  return new Promise((resolve) => setTimeout(resolve, duration));
+};
 
 // Handle slot clicks and manage the falling effect
 document.querySelectorAll(".slot").forEach((slot) => {
-  slot.addEventListener("click", () => {
+  slot.addEventListener("click", async () => {
     const columnIndex = parseInt(slot.dataset.column);
     const column = array.map(row => row[columnIndex]);
 
-    // Find the lowest empty slot in the column (simulating falling   s)
+    // Find the lowest empty slot in the column (simulating falling discs)
     const rowIndex = column.lastIndexOf(null);
     if (rowIndex !== -1) {
       // Update the game state
@@ -181,31 +185,39 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
       // Simulate falling by transitioning the disc down to the slot
       setTimeout(() => {
-        disc.style.transition = "top 3s ease-in"; // Extended time for the fall
+        disc.style.transition = "top 1.5s ease-in"; // Updated animation duration
         disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
-
-        // After falling, remove the disc
-        setTimeout(() => {
-          disc.remove(); // Remove the disc element after the animation
-
-          // Update the visual representation of the slot
-          targetSlot.classList.add(currentColor);
-
-          // Check for win after the disc lands
-          if (checkWin(array, currentPlayer)) {
-            alert(`${currentPlayerName} wins!`);
-            location.reload(); // Restart the game
-          }
-
-          // Toggle player turn
-          currentPlayer = currentPlayer === 1 ? 2 : 1;
-          updatePlayerTurn(); // Update the turn message
-        }, 3000); // This timeout matches the new fall duration
       }, 0);
+
+      // Wait for the animation to complete
+      await waitForAnimation(1500); // Wait for 1.5 seconds
+
+      // After falling, remove the disc
+      disc.remove(); // Remove the disc element after the animation
+
+      // Update the visual representation of the slot
+      targetSlot.classList.add(currentColor);
+
+      // Check for win after the disc lands
+      if (checkWin(array, currentPlayer)) {
+        // Update the status message
+        const status = document.querySelector('h3');
+        const resultMessage = document.createElement('h2');
+        resultMessage.textContent = `${currentPlayerName} wins!`;
+        resultMessage.classList.add("win-message"); // Apply CSS class for styling
+        status.parentNode.appendChild(resultMessage); // Append under the h3 element
+        return; // End the function to prevent further play
+      }
+
+      // Toggle player turn
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      updatePlayerTurn(); // Update the turn message
     }
     console.log(array);
   });
 });
+
+
 
 
 
