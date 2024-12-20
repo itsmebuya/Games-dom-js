@@ -23,7 +23,7 @@ const createConnect4Board = () => {
   for (let i = 0; i < 42; i++) {
     const slot = document.createElement("div");
     slot.classList.add("slot");
-    slot.id = i % 7 + "-" + Math.floor(i / 7);
+    slot.id = i % 7 + "-" + Math.floor(i / 7); // Correct ID format
     slot.dataset.column = i % 7; // 7 columns
     slot.dataset.row = Math.floor(i / 7); // 6 rows
     board.appendChild(slot);
@@ -93,14 +93,15 @@ let currentColor = playerOneColor;
 function paintSlot(array) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      if (array[i][j] == 'red') {
-        console.log(i, j, 'red')
-        document.getElementById(j+"-"+i).classList.add("red")
-        // console.log(i+"-"+j)
-      }
-      else if (array[i][j] == 'yellow') {
-        document.getElementById(j+"-"+i).classList.add("yellow")
-        console.log(i, j, 'yellow')
+      const slot = document.getElementById(`${j}-${i}`); // Fixed ID format
+//        if (!slot) {
+//          console.error(`Slot with ID ${j}-${i} not found.`);
+//          continue;
+//        }
+
+      const color = array[i][j] === 1 ? 'red' : array[i][j] === 2 ? 'yellow' : null;
+      if (color) {
+        slot.classList.add(color); // Apply the color class
       }
     }
   }
@@ -157,7 +158,7 @@ document.querySelectorAll(".slot").forEach((slot) => {
     const columnIndex = parseInt(slot.dataset.column);
     const column = array.map(row => row[columnIndex]);
 
-    // Find the lowest empty slot in the column (simulating falling discs)
+    // Find the lowest empty slot in the column (simulating falling   s)
     const rowIndex = column.lastIndexOf(null);
     if (rowIndex !== -1) {
       // Update the game state
@@ -183,18 +184,18 @@ document.querySelectorAll(".slot").forEach((slot) => {
         disc.style.transition = "top 3s ease-in"; // Extended time for the fall
         disc.style.top = `${rect.top + window.scrollY}px`; // Move to slot position
 
-        // After falling, append the disc to the slot
+        // After falling, remove the disc
         setTimeout(() => {
-          targetSlot.appendChild(disc);
-          disc.style.position = "relative"; // Reset position for grid placement
+          disc.remove(); // Remove the disc element after the animation
+
+          // Update the visual representation of the slot
+          targetSlot.classList.add(currentColor);
 
           // Check for win after the disc lands
           if (checkWin(array, currentPlayer)) {
-            console.log(`${currentPlayerName} wins`);
-            // alert(`${currentPlayerName} wins!`);
-            // location.reload(); // Restart the game
+            alert(`${currentPlayerName} wins!`);
+            location.reload(); // Restart the game
           }
-          paintSlot(array);
 
           // Toggle player turn
           currentPlayer = currentPlayer === 1 ? 2 : 1;
@@ -206,8 +207,7 @@ document.querySelectorAll(".slot").forEach((slot) => {
   });
 });
 
-// Initialize the first player turn
-updatePlayerTurn();
+
 
 
 

@@ -48,9 +48,13 @@ body {
     border: 3px solid #FFFF00;
 }
 .red{
-    background-color: red;
+    border: 3px solid #AA0000;
+    background-color: #D2122E;
 }
-.yellow{background-color: yellow;}
+.yellow{
+    background-color: #F0E68C;
+    border: 3px solid #FFFF00;
+}
 
 /* Controls for selecting the discs */
 .controls {
