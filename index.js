@@ -172,10 +172,10 @@ function emptySlot(array) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
       const element = document.getElementById(j + "-" + i);
-      if(element.classList.contains('red')){
+      if (element.classList.contains('red')) {
         element.classList.remove('red')
       }
-      else if(element.classList.contains('yellow')){
+      else if (element.classList.contains('yellow')) {
         element.classList.remove('yellow')
       }
 
@@ -325,7 +325,9 @@ document.querySelector('.reset_button').addEventListener('click', () => {
     [null, null, null, null, null, null, null],
   ];
   isLock = false;
-  document.querySelector('h2').style.display= "none"
+  if (document.querySelector('h2')) {
+    document.querySelector('h2').style.display = "none"
+  }
 })
 
 
