@@ -1,6 +1,20 @@
-.button {
-
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    padding: 100px;
 }
-.div{
-    
-}       
+.button1 {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    border: 2px solid #32de84;
+    background-color: #228B22;
+    cursor: pointer;
+}
+.button2 {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    border: 2px solid; 
+}

@@ -288,6 +288,7 @@ const onClick = async (event) => {
 
     // Check for a win condition after the disc lands
     if (checkWin(array, currentPlayer)) {
+      isLock = true;
       const status = document.querySelector('h3'); // Get the status element
       const resultMessage = document.createElement('h2'); // Create a new element for the win message
       resultMessage.textContent = `${currentPlayerName} wins!`; // Set the win message
