@@ -324,6 +324,8 @@ document.querySelector('.reset_button').addEventListener('click', () => {
     [null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null],
   ];
+  isLock = false;
+  document.querySelector('h2').style.display= "none"
 })
 
 
@@ -334,12 +336,12 @@ document.querySelector('.reset_button').addEventListener('click', () => {
 
 
 
-//const container = document.getElementById("container")
-//const title = document.createElement('div');
-//title.classList.add("Title")
-//const title_text = document.createElement('p');
-//title_text.innerHTML = "4 In A Row"
-//title_text.classList.add("Title_text")
-//title.appendChild(title_text);
-//document.getElementById("container").appendChild(title);
+// const container = document.getElementById("container")
+// const title = document.createElement('div');
+// title.classList.add("Title")
+// const title_text = document.createElement('p');
+// title_text.innerHTML = "4 In A Row"
+// title_text.classList.add("Title_text")
+// title.appendChild(title_text);
+// document.getElementById("container").appendChild(title);
 
