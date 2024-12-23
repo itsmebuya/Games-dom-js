@@ -257,7 +257,9 @@ const onClick = async (event) => {
   }
   console.log(array);
 };
-
+  document.querySelectorAll(".slot").forEach((slot) => {
+    slot.addEventListener("click", onClick)
+  });
 document.querySelectorAll(".slot").forEach((slot) => {
   slot.addEventListener("click", onClick)
 });
@@ -266,7 +268,7 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
 
 
-
+ 
 
 
 
