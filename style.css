@@ -55,6 +55,11 @@ body {
     background-color: #F0E68C;
     border: 3px solid #FFFF00;
 }
+.emptySlot{
+    background-color: white;
+    border: 2px solid #318CE7;
+
+}
 
 /* Controls for selecting the discs */
 .controls {
@@ -121,4 +126,12 @@ body {
     100% {
         background-position: 100% 0%;
     }
+}
+
+.reset_button {
+    padding: 10px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+
 }

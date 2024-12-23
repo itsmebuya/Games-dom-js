@@ -39,6 +39,13 @@ const createConnect4Board = () => {
     slot.dataset.row = Math.floor(i / 7); // Add the row index as a dataset attribute
     board.appendChild(slot); // Add the slot to the board
   }
+  // creating reset button and display
+  const resetButton = document.createElement('button');
+  resetButton.innerHTML = "Reset Game"
+  resetButton.classList.add("reset_button");
+
+
+
 
   // Create a container for the controls (player disc choices)
   // Create the controls container
@@ -95,11 +102,17 @@ const createConnect4Board = () => {
   // Add a status message (h3) below the board for displaying the current turn or winner
   const status = document.createElement("h3");
   gameBoard.appendChild(status);
+  gameBoard.appendChild(resetButton)
+
 };
 
 
+
+
 // Initialize the game board by calling the createConnect4Board function
-createConnect4Board();
+
+document.addEventListener("DOMContentLoaded", createConnect4Board());
+
 
 // Initialize the game state as a 2D array representing the board (7 columns x 6 rows)
 let array = [
@@ -128,11 +141,44 @@ function togglePlayer() {
 function paintSlot(array) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      const slot = document.getElementById(`${j}-${i}`); // Get the slot by ID
-      const color = array[i][j] === 1 ? 'red' : array[i][j] === 2 ? 'yellow' : null; // Determine slot color
-      if (color) {
-        slot.classList.add(color); // Apply the corresponding color class
+      // const slot = document.getElementById(`${j}-${i}`); // Get the slot by ID
+      // // const color = array[i][j] === 1 ? 'red' : array[i][j] === 2 ? 'yellow' : null; // Determine slot color
+      // let color;
+      // if (array[i][j] === 1) {
+      //   color = 'red';
+      // } else if (array[i][j] === 2) {
+      //   color = 'yellow';
+      // } else {
+      //   color = null;
+      // }
+
+      if (array[i][j] == '1') {
+        console.log(i, j, 'red')
+        document.getElementById(j + "-" + i).classList.add("red")
+        // console.log(i+"-"+j)
       }
+      else if (array[i][j] == '2') {
+        document.getElementById(j + "-" + i).classList.add("yellow")
+        console.log(i, j, 'yellow')
+      }
+      else if (array[i][j] == null) {
+        // document.getElementById(j+"-"+i).classList.add("emptySlot")
+      }
+
+    }
+  }
+}
+function emptySlot(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      const element = document.getElementById(j + "-" + i);
+      if(element.classList.contains('red')){
+        element.classList.remove('red')
+      }
+      else if(element.classList.contains('yellow')){
+        element.classList.remove('yellow')
+      }
+
     }
   }
 }
@@ -257,9 +303,9 @@ const onClick = async (event) => {
   }
   console.log(array);
 };
-  document.querySelectorAll(".slot").forEach((slot) => {
-    slot.addEventListener("click", onClick)
-  });
+document.querySelectorAll(".slot").forEach((slot) => {
+  slot.addEventListener("click", onClick)
+});
 document.querySelectorAll(".slot").forEach((slot) => {
   slot.addEventListener("click", onClick)
 });
@@ -267,9 +313,17 @@ document.querySelectorAll(".slot").forEach((slot) => {
 
 
 
-
- 
-
+document.querySelector('.reset_button').addEventListener('click', () => {
+  emptySlot(array);
+  array = [
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+  ];
+})
 
 
 
