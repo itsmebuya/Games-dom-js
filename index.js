@@ -1,26 +1,3 @@
-// document.getElementById('game1-btn').addEventListener('click', function() {
-//     // Go to 4 in a row game
-//     window.location.href = '4inarow.html'; // Change this path to your 4 in a row game page
-// });
-
-// document.getElementById('game2-btn').addEventListener('click', function() {
-//     // Go to Tic Tac Toe game
-//     window.location.href = 'tictactoe.html'; // Change this path to your Tic Tac Toe game page
-// });
-
-// document.getElementById('game3-btn').addEventListener('click', function() {
-//     // Go to Line game
-//     window.location.href = 'line.html'; // Change this path to your Line game page
-// });
-
-
-
-
-
-
-
-
-// Function to create and initialize the Connect 4 game board
 const createConnect4Board = () => {
   // Get the container element where the board will be placed
   const gameBoard = document.getElementById("container");
@@ -44,12 +21,6 @@ const createConnect4Board = () => {
   resetButton.innerHTML = "Reset Game"
   resetButton.classList.add("reset_button");
 
-
-
-
-  // Create a container for the controls (player disc choices)
-  // Create the controls container
-  // Create the controls container
   const controls = document.createElement("div");
   controls.classList.add("controls"); // Add a class for styling
 
@@ -106,13 +77,9 @@ const createConnect4Board = () => {
 
 };
 
-
-
-
 // Initialize the game board by calling the createConnect4Board function
 
 document.addEventListener("DOMContentLoaded", createConnect4Board());
-
 
 // Initialize the game state as a 2D array representing the board (7 columns x 6 rows)
 let array = [
@@ -123,7 +90,6 @@ let array = [
   [null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null],
 ];
-
 
 let currentPlayer = 1; // 1 for Player One (red), 2 for Player Two (yellow)
 let currentPlayerName = 'Player One';
@@ -141,17 +107,6 @@ function togglePlayer() {
 function paintSlot(array) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      // const slot = document.getElementById(`${j}-${i}`); // Get the slot by ID
-      // // const color = array[i][j] === 1 ? 'red' : array[i][j] === 2 ? 'yellow' : null; // Determine slot color
-      // let color;
-      // if (array[i][j] === 1) {
-      //   color = 'red';
-      // } else if (array[i][j] === 2) {
-      //   color = 'yellow';
-      // } else {
-      //   color = null;
-      // }
-
       if (array[i][j] == '1') {
         console.log(i, j, 'red')
         document.getElementById(j + "-" + i).classList.add("red")
@@ -164,7 +119,6 @@ function paintSlot(array) {
       else if (array[i][j] == null) {
         // document.getElementById(j+"-"+i).classList.add("emptySlot")
       }
-
     }
   }
 }
@@ -178,7 +132,6 @@ function emptySlot(array) {
       else if (element.classList.contains('yellow')) {
         element.classList.remove('yellow')
       }
-
     }
   }
 }
@@ -192,7 +145,6 @@ const checkWin = (array, currentPlayer) => {
     [1, 1], // Diagonal down-right
     [1, -1], // Diagonal up-right
   ];
-
   // Loop through each position on the board
   for (let row = 0; row < 6; row++) {
     for (let col = 0; col < 7; col++) {
@@ -296,10 +248,7 @@ const onClick = async (event) => {
       status.parentNode.appendChild(resultMessage); // Display the win message
       return; // Stop further play
     }
-
-    // Toggle player turn
     togglePlayer();
-    // currentPlayer = currentPlayer === 1 ? 2 : 1;
     updatePlayerTurn(); // Update the turn message
   }
   console.log(array);
@@ -310,9 +259,6 @@ document.querySelectorAll(".slot").forEach((slot) => {
 document.querySelectorAll(".slot").forEach((slot) => {
   slot.addEventListener("click", onClick)
 });
-
-
-
 
 document.querySelector('.reset_button').addEventListener('click', () => {
   emptySlot(array);
@@ -329,21 +275,3 @@ document.querySelector('.reset_button').addEventListener('click', () => {
     document.querySelector('h2').style.display = "none"
   }
 })
-
-
-
-
-
-
-
-
-
-// const container = document.getElementById("container")
-// const title = document.createElement('div');
-// title.classList.add("Title")
-// const title_text = document.createElement('p');
-// title_text.innerHTML = "4 In A Row"
-// title_text.classList.add("Title_text")
-// title.appendChild(title_text);
-// document.getElementById("container").appendChild(title);
-
